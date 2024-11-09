@@ -1,0 +1,128 @@
+[gd_scene load_steps=7 format=3 uid="uid://ughgsoxhtl6s"]
+
+[ext_resource type="Script" path="res://Score/ScoreHandler.cs" id="1_c7grb"]
+[ext_resource type="PackedScene" uid="uid://pv4s8tcs05ld" path="res://Player/Paddle.tscn" id="1_geyuu"]
+[ext_resource type="PackedScene" uid="uid://dfm8dr2hvca76" path="res://Ball/Ball.tscn" id="2_8wenl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0a7e8"]
+size = Vector2(20, 648)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_0cqsa"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_k1jcv"]
+
+[node name="Main" type="Node2D"]
+
+[node name="GameHandler" type="Node" parent="."]
+
+[node name="Divider" type="Line2D" parent="."]
+position = Vector2(576, 0)
+points = PackedVector2Array(0, 0, 0, 648)
+width = 20.0
+default_color = Color(0.784314, 0.784314, 0.784314, 1)
+
+[node name="ScoreHandler" type="Node2D" parent="." node_paths=PackedStringArray("ResetScore", "P1ScoreDetector", "P2ScoreDetector", "P1ScoreLabel", "P2ScoreLabel")]
+script = ExtResource("1_c7grb")
+ResetScore = NodePath("ResetScore")
+P1ScoreDetector = NodePath("P1/P1ScoreDetector")
+P2ScoreDetector = NodePath("P2/P2ScoreDetector")
+P1ScoreLabel = NodePath("P1/Label")
+P2ScoreLabel = NodePath("P2/Label")
+
+[node name="P1" type="Node2D" parent="ScoreHandler"]
+position = Vector2(576, 324)
+
+[node name="P1ScoreDetector" type="Area2D" parent="ScoreHandler/P1"]
+position = Vector2(-586, 0)
+collision_layer = 0
+collision_mask = 4
+
+[node name="Collider" type="CollisionShape2D" parent="ScoreHandler/P1/P1ScoreDetector"]
+shape = SubResource("RectangleShape2D_0a7e8")
+
+[node name="Label" type="Label" parent="ScoreHandler/P1"]
+custom_minimum_size = Vector2(200, 100)
+offset_left = -220.0
+offset_top = -324.0
+offset_right = -20.0
+offset_bottom = -224.0
+theme_override_font_sizes/font_size = 80
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P2" type="Node2D" parent="ScoreHandler"]
+position = Vector2(576, 324)
+
+[node name="Label" type="Label" parent="ScoreHandler/P2"]
+custom_minimum_size = Vector2(200, 100)
+offset_left = 20.0
+offset_top = -324.0
+offset_right = 120.0
+offset_bottom = -224.0
+theme_override_font_sizes/font_size = 80
+text = "0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P2ScoreDetector" type="Area2D" parent="ScoreHandler/P2"]
+position = Vector2(586, 0)
+collision_layer = 0
+collision_mask = 4
+
+[node name="Collider" type="CollisionShape2D" parent="ScoreHandler/P2/P2ScoreDetector"]
+shape = SubResource("RectangleShape2D_0a7e8")
+
+[node name="ResetScore" type="Button" parent="ScoreHandler"]
+custom_minimum_size = Vector2(150, 50)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 501.0
+offset_top = 35.0
+offset_right = 651.0
+offset_bottom = 85.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 20
+text = "Reset Score"
+
+[node name="ColorRect" type="ColorRect" parent="ScoreHandler/ResetScore"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Paddle1" parent="." instance=ExtResource("1_geyuu")]
+position = Vector2(20, 324)
+upAction = &"P1_Up"
+downAction = &"P1_Down"
+
+[node name="Paddle2" parent="." instance=ExtResource("1_geyuu")]
+position = Vector2(1132, 324)
+upAction = &"P2_Up"
+downAction = &"P2_Down"
+
+[node name="Ball" parent="." instance=ExtResource("2_8wenl")]
+position = Vector2(576, 324)
+Speed = 600.0
+
+[node name="Boundaries" type="StaticBody2D" parent="." groups=["Map"]]
+collision_mask = 7
+
+[node name="Top" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(576, 0)
+shape = SubResource("WorldBoundaryShape2D_0cqsa")
+
+[node name="Bottom" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(576, 648)
+shape = SubResource("WorldBoundaryShape2D_k1jcv")

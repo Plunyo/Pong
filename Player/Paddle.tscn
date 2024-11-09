@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://pv4s8tcs05ld"]
+
+[ext_resource type="Script" path="res://Player/Paddle.cs" id="1_uhkta"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0j148"]
+size = Vector2(40, 150)
+
+[node name="Paddle" type="CharacterBody2D" groups=["Paddle"]]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("1_uhkta")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0j148")
+
+[node name="Rect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(40, 150)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -75.0
+offset_right = 20.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
